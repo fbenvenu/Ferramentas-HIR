@@ -14,25 +14,34 @@
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 60px 24px;
+            padding: 50px 24px;
             position: relative;
             overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
         }
 
-        body::before {
+        body.dark {
+            background: #0a0e27;
+            color: #fff;
+        }
+
+        body.light {
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        body.dark::before {
             content: '';
             position: fixed;
             top: -50%;
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
             animation: gradient-shift 20s ease infinite;
             z-index: 0;
-            pointer-events: none;
         }
 
         @keyframes gradient-shift {
@@ -41,7 +50,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
@@ -53,150 +62,368 @@
         }
 
         header h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 12px;
-            color: #ffffff;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        body.dark header h1 {
+            background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.light header h1 {
+            color: #0f172a;
         }
 
         .subtitle {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.1rem;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        body.dark .subtitle {
+            color: #94a3b8;
+        }
+
+        body.light .subtitle {
+            color: #64748b;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 28px;
+            right: 28px;
+            display: flex;
+            gap: 6px;
+            backdrop-filter: blur(12px);
+            border-radius: 12px;
+            padding: 6px;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        body.dark .theme-toggle {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        body.light .theme-toggle {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(203, 213, 225, 0.5);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .theme-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        body.dark .theme-btn {
+            color: #94a3b8;
+        }
+
+        body.light .theme-btn {
+            color: #64748b;
+        }
+
+        body.dark .theme-btn.active {
+            background: rgba(99, 102, 241, 0.2);
+            color: #c7d2fe;
+        }
+
+        body.light .theme-btn.active {
+            background: #e0e7ff;
+            color: #4338ca;
         }
 
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-bottom: 48px;
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
         .tool-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 32px 28px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 22px;
             text-decoration: none;
-            color: #1a202c;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark .tool-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+        }
+
+        body.light .tool-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tool-card:nth-child(1)::before {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        }
+
+        .tool-card:nth-child(2)::before {
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
         }
 
         .tool-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 48px rgba(31, 38, 135, 0.35);
-            background: rgba(255, 255, 255, 1);
+            transform: translateY(-6px);
         }
 
-        .card-header {
+        body.dark .tool-card:hover {
+            border-color: rgba(148, 163, 184, 0.25);
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        body.light .tool-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-top {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
+            justify-content: space-between;
+            margin-bottom: 16px;
         }
 
-        .icon {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 14px;
+        .icon-container {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            font-size: 1.5rem;
         }
 
-        .card-title {
-            flex: 1;
+        .tool-card:nth-child(1) .icon-container {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
         }
 
-        .card-title h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 4px;
+        .tool-card:nth-child(2) .icon-container {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.15));
         }
 
-        .card-title p {
-            font-size: 0.85rem;
-            color: #718096;
+        body.dark .icon-container {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+        }
+
+        .status {
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        body.dark .status {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+        }
+
+        body.light .status {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .card-body h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        body.dark .card-body h2 {
+            color: #f1f5f9;
+        }
+
+        body.light .card-body h2 {
+            color: #0f172a;
+        }
+
+        .card-label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        body.dark .card-label {
+            color: #94a3b8;
+        }
+
+        body.light .card-label {
+            color: #64748b;
         }
 
         .card-description {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #4a5568;
-            margin-bottom: 24px;
-            flex: 1;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 18px;
         }
 
-        .card-footer {
+        body.dark .card-description {
+            color: #cbd5e1;
+        }
+
+        body.light .card-description {
+            color: #475569;
+        }
+
+        .card-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 12px;
+            padding-top: 14px;
         }
 
-        .btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        body.dark .card-bottom {
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        body.light .card-bottom {
+            border-top: 1px solid #e2e8f0;
         }
 
-        .tags {
+        .tech-tags {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
-        .tag {
-            padding: 6px 12px;
-            background: #e6effb;
+        .tech-tag {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        body.dark .tech-tag {
+            background: rgba(148, 163, 184, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            color: #94a3b8;
+        }
+
+        body.light .tech-tag {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
             border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        body.dark .action-btn {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #818cf8;
+        }
+
+        body.light .action-btn {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .tool-card:hover .action-btn {
+            transform: translateX(4px);
+        }
+
+        body.dark .tool-card:hover .action-btn {
+            background: rgba(99, 102, 241, 0.25);
+            color: #c7d2fe;
+        }
+
+        body.light .tool-card:hover .action-btn {
+            background: #6366f1;
+            color: white;
         }
 
         footer {
             text-align: center;
-            padding-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
+            margin-top: 60px;
+            padding-top: 28px;
+            font-size: 0.875rem;
+        }
+
+        body.dark footer {
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            color: #64748b;
+        }
+
+        body.light footer {
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
         }
 
         @media (max-width: 768px) {
             body {
-                padding: 40px 16px;
+                padding: 36px 18px;
             }
 
             header h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
 
             .tools-grid {
                 grid-template-columns: 1fr;
             }
+
+            .theme-toggle {
+                top: 20px;
+                right: 20px;
+            }
         }
     </style>
 </head>
-<body>
+<body class="dark">
+    <div class="theme-toggle">
+        <button class="theme-btn" onclick="setTheme('dark')">🌙 Escuro</button>
+        <button class="theme-btn" onclick="setTheme('light')">☀️ Claro</button>
+    </div>
+
     <div class="container">
         <header>
             <h1>Ferramentas - HIR</h1>
@@ -205,42 +432,40 @@
 
         <div class="tools-grid">
             <a href="Formulário Tráfego Digital - HIR.html" class="tool-card">
-                <div class="card-header">
-                    <div class="icon">📋</div>
-                    <div class="card-title">
-                        <h2>Visualizador</h2>
-                        <p>Dimensões de criativos</p>
-                    </div>
+                <div class="card-top">
+                    <div class="icon-container">📋</div>
+                    <span class="status">Ativo</span>
                 </div>
-                <div class="card-description">
-                    Confere rapidamente se os formatos enviados batem com as dimensões suportadas antes de subir no ad server.
+                <div class="card-body">
+                    <h2>Formulário Tráfego Digital</h2>
+                    <span class="card-label">Validação rápida</span>
+                    <p class="card-description">Validação e análise completa de formulários para campanhas de tráfego digital.</p>
                 </div>
-                <div class="card-footer">
-                    <a href="Formulário Tráfego Digital - HIR.html" class="btn">Ver tela →</a>
-                    <div class="tags">
-                        <span class="tag">Display</span>
-                        <span class="tag">QA</span>
+                <div class="card-bottom">
+                    <div class="tech-tags">
+                        <span class="tech-tag">Validação</span>
+                        <span class="tech-tag">Formulários</span>
                     </div>
+                    <div class="action-btn">→</div>
                 </div>
             </a>
 
             <a href="Visualizador de Safe Zone - HIR.HTML" class="tool-card">
-                <div class="card-header">
-                    <div class="icon">🎯</div>
-                    <div class="card-title">
-                        <h2>Touchpoint</h2>
-                        <p>IDs + Parâmetros</p>
-                    </div>
+                <div class="card-top">
+                    <div class="icon-container">🎯</div>
+                    <span class="status">Ativo</span>
                 </div>
-                <div class="card-description">
-                    Garante que IDs, posicionamentos e parâmetros estejam corretos antes do disparo em GAM.
+                <div class="card-body">
+                    <h2>Visualizador de Safe Zone</h2>
+                    <span class="card-label">Dimensões de criativos</span>
+                    <p class="card-description">Confira se os formatos enviados batem com as dimensões suportadas.</p>
                 </div>
-                <div class="card-footer">
-                    <a href="Visualizador de Safe Zone - HIR.HTML" class="btn">Validar →</a>
-                    <div class="tags">
-                        <span class="tag">GAM</span>
-                        <span class="tag">Validação</span>
+                <div class="card-bottom">
+                    <div class="tech-tags">
+                        <span class="tech-tag">Display</span>
+                        <span class="tech-tag">QA</span>
                     </div>
+                    <div class="action-btn">→</div>
                 </div>
             </a>
         </div>
@@ -249,5 +474,27 @@
             <p>Desenvolvido pela equipe HIR • Tráfego Digital © 2026</p>
         </footer>
     </div>
+
+    <script>
+        function setTheme(theme) {
+            document.body.className = theme;
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            localStorage.setItem('theme', theme);
+        }
+
+        // Carrega o tema salvo
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.className = savedTheme;
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                if (btn.textContent.includes(savedTheme === 'dark' ? 'Escuro' : 'Claro')) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
