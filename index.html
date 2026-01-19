@@ -14,16 +14,35 @@
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: #1a1d2e;
+            background: #1e2333;
             color: #fff;
             min-height: 100vh;
-            padding: 50px 24px;
+            padding: 50px 40px;
             position: relative;
             overflow-x: hidden;
         }
 
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(139, 92, 246, 0.12) 0%, transparent 50%);
+            animation: gradient-shift 20s ease infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-10%, 10%) rotate(180deg); }
+        }
+
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
@@ -31,11 +50,11 @@
 
         header {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 56px;
         }
 
         header h1 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             font-weight: 700;
             margin-bottom: 12px;
             color: #ffffff;
@@ -50,10 +69,10 @@
         .theme-toggle {
             position: fixed;
             top: 24px;
-            right: 24px;
+            right: 32px;
             display: flex;
             gap: 8px;
-            background: rgba(30, 34, 51, 0.9);
+            background: rgba(30, 34, 51, 0.8);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
@@ -62,7 +81,7 @@
         }
 
         .theme-btn {
-            padding: 8px 16px;
+            padding: 10px 18px;
             background: transparent;
             border: none;
             color: #9ca3af;
@@ -74,19 +93,19 @@
         }
 
         .theme-btn.active {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.25);
             color: #e0e7ff;
         }
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
         }
 
         .tool-card {
-            border-radius: 24px;
-            padding: 36px 32px;
+            border-radius: 28px;
+            padding: 40px 36px;
             text-decoration: none;
             color: white;
             display: flex;
@@ -94,83 +113,83 @@
             position: relative;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            min-height: 320px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+            min-height: 360px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .tool-card:nth-child(1) {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
         }
 
         .tool-card:nth-child(2) {
-            background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 50%, #3b82f6 100%);
+            background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
         }
 
         .tool-card:nth-child(3) {
-            background: linear-gradient(135deg, #ec4899 0%, #d946ef 50%, #a855f7 100%);
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
         }
 
         .tool-card:nth-child(4) {
-            background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ef4444 100%);
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
         }
 
         .tool-card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
             pointer-events: none;
         }
 
         .tool-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
         }
 
         .card-header {
             display: flex;
             align-items: flex-start;
-            gap: 18px;
-            margin-bottom: 28px;
+            gap: 20px;
+            margin-bottom: 32px;
         }
 
         .icon-box {
-            width: 56px;
-            height: 56px;
-            background: rgba(255, 255, 255, 0.18);
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
-            border-radius: 16px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 2rem;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
 
         .card-titles h2 {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 600;
-            margin-bottom: 6px;
-            letter-spacing: 0.3px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
         }
 
         .card-subtitle {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             opacity: 0.9;
             font-weight: 400;
         }
 
         .card-body {
             flex: 1;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
         }
 
         .card-description {
-            font-size: 0.98rem;
+            font-size: 1.05rem;
             line-height: 1.7;
-            opacity: 0.94;
+            opacity: 0.95;
         }
 
         .card-footer {
@@ -178,15 +197,16 @@
             justify-content: space-between;
             align-items: center;
             gap: 16px;
+            flex-wrap: wrap;
         }
 
         .btn-primary {
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.18);
+            padding: 12px 28px;
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 12px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
             color: white;
             text-decoration: none;
@@ -194,13 +214,13 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
         }
 
         .btn-primary:hover {
-            background: rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
         }
 
         .tech-badges {
@@ -210,10 +230,10 @@
         }
 
         .tech-badge {
-            padding: 6px 14px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            font-size: 0.75rem;
+            padding: 7px 16px;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+            font-size: 0.8rem;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -227,24 +247,31 @@
 
         footer {
             text-align: center;
-            margin-top: 64px;
-            padding-top: 28px;
+            margin-top: 72px;
+            padding-top: 32px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             color: #6b7280;
             font-size: 0.9rem;
         }
 
+        @media (max-width: 1200px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             body {
-                padding: 36px 18px;
+                padding: 36px 20px;
             }
 
             header h1 {
                 font-size: 2.2rem;
             }
 
-            .tools-grid {
-                grid-template-columns: 1fr;
+            .tool-card {
+                min-height: 320px;
+                padding: 32px 28px;
             }
         }
     </style>
