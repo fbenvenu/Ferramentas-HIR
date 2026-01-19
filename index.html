@@ -5,121 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferramentas - HIR</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 60px 20px;
+            margin: 0;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .header-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        header {
+            color: white;
             margin-bottom: 40px;
-            flex-wrap: wrap;
-            gap: 20px;
         }
 
-        header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: white;
-            letter-spacing: -0.5px;
+        h1 {
+            font-size: 2.5rem;
+            margin: 0 0 8px 0;
         }
 
         .subtitle {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.95rem;
-            margin-top: 4px;
-        }
-
-        .theme-toggle {
-            display: flex;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 4px;
-        }
-
-        .theme-btn {
-            padding: 8px 16px;
-            background: transparent;
-            border: none;
-            border-radius: 8px;
-            color: rgba(255, 255, 255, 0.7);
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .theme-btn.active {
-            background: rgba(255, 255, 255, 0.25);
-            color: white;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
+            background: white;
             border-radius: 16px;
-            padding: 24px;
+            padding: 28px;
             text-decoration: none;
-            color: inherit;
+            color: #1a1a1a;
             display: block;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid #667eea;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            transition: opacity 0.3s;
-            opacity: 0;
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
         }
 
-        .card:nth-child(1)::before {
-            background: linear-gradient(90deg, #667eea, #764ba2);
+        .card:nth-child(2) {
+            border-top-color: #48dbfb;
         }
 
-        .card:nth-child(2)::before {
-            background: linear-gradient(90deg, #48dbfb, #0abde3);
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            display: block;
         }
 
-        .card:nth-child(3)::before {
-            background: linear-gradient(90deg, #ff9ff3, #feca57);
+        h2 {
+            font-size: 1.3rem;
+            margin: 0 0 8px 0;
         }
 
-        .card:nth-child(4)::before {
-            background: linear-gradient(90deg, #ee5a6f, #f29263);
+        .label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            display: block;
         }
 
-        
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-top: 16px;
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .arrow {
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ferramentas - HIR</h1>
+            <p class="subtitle">Atalhos rápidos para os utilitários que você realmente usa.</p>
+        </header>
+
+        <div class="grid">
+            <a href="Formulário Tráfego Digital - HIR.html" class="card">
+                <span class="icon">📋</span>
+                <h2>Formulário Tráfego Digital</h2>
+                <span class="label">Validação rápida</span>
+                <p>Validação e análise completa de formulários para campanhas de tráfego digital.</p>
+                <div class="footer">
+                    <div class="tags">
+                        <span class="tag">Validação</span>
+                        <span class="tag">Formulários</span>
+                    </div>
+                    <span class="arrow">→</span>
+                </div>
+            </a>
+
+            <a href="Visualizador de Safe Zone - HIR.HTML" class="card">
+                <span class="icon">🎯</span>
+                <h2>Visualizador de Safe Zone</h2>
+                <span class="label">Dimensões de criativos</span>
+                <p>Confira se os formatos enviados batem com as dimensões suportadas.</p>
+                <div class="footer">
+                    <div class="tags">
+                        <span class="tag">Display</span>
+                        <span class="tag">QA</span>
+                    </div>
+                    <span class="arrow">→</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
