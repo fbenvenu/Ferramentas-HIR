@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tráfego Digital HIR - Formulário de Contato</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-gradient-1: #1e3c72;
+            --bg-gradient-2: #2a5298;
+            --bg-gradient-3: #7e22ce;
+            --container-bg: #ffffff;
+            --text-primary: #1e3c72;
+            --text-secondary: #64748b;
+            --input-bg: #ffffff;
+            --input-border: #cbd5e1;
+            --input-focus: #2a5298;
+            --option-bg: #f8fafc;
+            --option-hover: #e2e8f0;
+        }
+
+        body.dark-mode {
+            --bg-gradient-1: #0f172a;
+            --bg-gradient-2: #1e293b;
+            --bg-gradient-3: #334155;
+            --container-bg: #1e293b;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --input-bg: #0f172a;
+            --input-border: #334155;
+            --input-focus: #3b82f6;
+            --option-bg: #0f172a;
+            --option-hover: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 50%, var(--bg-gradient-3) 100%);
+            padding: 20px;
+            min-height: 100vh;
+            transition: background 0.3s ease;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--container-bg);
+            border: 2px solid var(--input-border);
+            border-radius: 50px;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-icon {
+            font-size: 20px;
+        }
+
+        .theme-text {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: background 0.3s ease;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .logo {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            color: white;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: 2px;
+        }
+
+        .highlight {
+            color: #ffffff;
+            font-weight: 800;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.95);
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-content {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        .helper-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="url"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--input-border);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .currency-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 16px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 15px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .currency-input {
+            padding-left: 45px !important;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.15);
+            transform: translateY(-1px);
+        }
+
+        body.dark-mode input:focus,
+        body.dark-mode select:focus,
+        body.dark-mode textarea:focus {
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232a5298' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            line-height: 1.6;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--option-bg);
+            border: 2px solid var(--input-border);
+            border-radius: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .radio-option:hover,
+        .checkbox-option:hover {
+            background: var(--option-hover);
+            border-color: var(--input-focus);
+            transform: translateX(4px);
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #2a5298;
+        }
+
+        body.dark-mode input[type="radio"],
+        body.dark-mode input[type="checkbox"] {
+            accent-color: #3b82f6;
+        }
+
+        .radio-option label,
+        .checkbox-option label {
+            margin: 0;
+            font-weight: 500;
+            cursor: pointer;
+            flex: 1;
+            color: var(--text-primary);
+            transition: color 0.3s;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(30, 60, 114, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(30, 60, 114, 0.5);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .success-message::before {
+            content: '✓';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: white;
+            color: #10b981;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+            }
+
+            .theme-text {
+                display: none;
+            }
+
+            .header {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+            .form-content {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span class="theme-icon" id="themeIcon">🌙</span>
+        <span class="theme-text" id="themeText">Modo Escuro</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <h1>TRÁFEGO DIGITAL <span class="highlight">HIR</span></h1>
+                <p class="subtitle">Preencha as informações abaixo para começarmos a trabalhar juntos</p>
+            </div>
+        </div>
+
+        <div class="form-content">
+            <div class="success-message" id="successMessage">
+                Formulário enviado com sucesso! O arquivo Excel foi baixado automaticamente.
+            </div>
+
+            <form id="qualificationForm">
+                <!-- Dados Básicos -->
+                <div class="form-group">
+                    <label>Nome Completo <span class="required">*</span></label>
+                    <input type="text" name="nome" placeholder="Seu nome completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label>E-mail <span class="required">*</span></label>
+                    <input type="email" name="email" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Telefone/WhatsApp <span class="required">*</span></label>
+                    <input type="tel" name="telefone" placeholder="(11) 99999-9999" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nome da Empresa <span class="required">*</span></label>
+                    <input type="text" name="empresa" placeholder="Nome da sua empresa" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Área de Atuação (Bairro/Região) <span class="required">*</span></label>
+                    <input type="text" name="area_atuacao" placeholder="País, cidade ou bairro" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Segmento de Atuação <span class="required">*</span></label>
+                    <select name="segmento" required>
+                        <option value="">Selecione...</option>
+                        <option value="ecommerce">E-commerce</option>
+                        <option value="servicos">Serviços</option>
+                        <option value="saude">Saúde e Bem-estar</option>
+                        <option value="educacao">Educação</option>
+                        <option value="restaurante">Restaurante/Alimentação</option>
+                        <option value="moda">Moda e Beleza</option>
+                        <option value="tecnologia">Tecnologia</option>
+                        <option value="imobiliario">Imobiliário</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Instagram Ativo? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="insta-sim" name="instagram_ativo" value="sim" required>
+                            <label for="insta-sim">Sim, tenho Instagram ativo</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="insta-nao" name="instagram_ativo" value="nao">
+                            <label for="insta-nao">Não tenho Instagram</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Já possui Site ou Landing Page? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="site-sim" name="site_possui" value="sim" required>
+                            <label for="site-sim">Sim, já tenho</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="site-nao" name="site_possui" value="nao">
+                            <label for="site-nao">Não tenho ainda</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Website ou Link da Rede Social</label>
+                    <input type="url" name="website" placeholder="https://seu-site.com ou https://instagram.com/seu-perfil">
+                </div>
+
+                <div class="form-group">
+                    <label>WhatsApp Business? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="whats-sim" name="whatsapp_business" value="sim" required>
+                            <label for="whats-sim">Sim, uso WhatsApp Business</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="whats-nao" name="whatsapp_business" value="nao">
+                            <label for="whats-nao">Não, uso WhatsApp normal</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objetivo com seleção múltipla -->
+                <div class="form-group">
+                    <label>Qual o principal objetivo? <span class="required">*</span></label>
+                    <p class="helper-text">Você pode selecionar até 3 opções</p>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="vendas" name="objetivo" value="vendas" class="objetivo-checkbox">
+                            <label for="vendas">Aumentar vendas</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="leads" name="objetivo" value="leads" class="objetivo-checkbox">
+                            <label for="leads">Gerar leads qualificados</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="trafego" name="objetivo" value="trafego" class="objetivo-checkbox">
+                            <label for="trafego">Aumentar tráfego no site</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="reconhecimento" name="objetivo" value="reconhecimento" class="objetivo-checkbox">
+                            <label for="reconhecimento">Reconhecimento de marca</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="engajamento" name="objetivo" value="engajamento" class="objetivo-checkbox">
+                            <label for="engajamento">Engajamento nas redes sociais</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experiência Anterior -->
+                <div class="form-group">
+                    <label>Já investiu em tráfego pago antes? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="exp-sim" name="experiencia" value="sim" required>
+                            <label for="exp-sim">Sim, com resultados positivos</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="exp-sim-neg" name="experiencia" value="sim-negativo">
+                            <label for="exp-sim-neg">Sim, mas não tive bons resultados</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="exp-nao" name="experiencia" value="nao">
+                            <label for="exp-nao">Não, é minha primeira vez</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plataformas de Interesse - apenas Meta e Google -->
+                <div class="form-group">
+                    <label>Quais plataformas tem interesse? <span class="required">*</span></label>
+                    <p class="helper-text">Você pode selecionar ambas as opções</p>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="meta" name="plataformas" value="meta">
+                            <label for="meta">Meta Ads (Facebook/Instagram)</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="google" name="plataformas" value="google">
+                            <label for="google">Google Ads</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orçamento com campo aberto -->
+                <div class="form-group">
+                    <label>Orçamento mensal previsto para investimento <span class="required">*</span></label>
+                    <div class="currency-input-wrapper">
+                        <span class="currency-symbol">R$</span>
+                        <input type="number" name="orcamento" class="currency-input" placeholder="0,00" min="0" step="0.01" required>
+                    </div>
+                </div>
+
+                <!-- Prazo -->
+                <div class="form-group">
+                    <label>Quando pretende começar? <span class="required">*</span></label>
+                    <select name="prazo" required>
+                        <option value="">Selecione...</option>
+                        <option value="imediato">Imediatamente</option>
+                        <option value="semana">Próxima semana</option>
+                        <option value="mes">Próximo mês</option>
+                        <option value="analise">Ainda estou analisando</option>
+                    </select>
+                </div>
+
+                <!-- Informações Adicionais -->
+                <div class="form-group">
+                    <label>Conte mais sobre seu negócio e expectativas</label>
+                    <textarea name="detalhes" placeholder="Descreva brevemente seu público-alvo, produtos/serviços principais, desafios atuais..."></textarea>
+                </div>
+
+                <button type="submit">Enviar Formulário</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Biblioteca para gerar Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Modo Claro';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Modo Escuro';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Carregar tema salvo
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeIcon').textContent = '☀️';
+                document.getElementById('themeText').textContent = 'Modo Claro';
+            }
+        });
+
+        // Limitar seleção de objetivos a 3
+        const objetivoCheckboxes = document.querySelectorAll('.objetivo-checkbox');
+        objetivoCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const checkedCount = document.querySelectorAll('.objetivo-checkbox:checked').length;
+                if (checkedCount > 3) {
+                    this.checked = false;
+                    alert('Você pode selecionar no máximo 3 objetivos.');
+                }
+            });
+        });
+
+        // Validar se pelo menos um objetivo foi selecionado
+        document.getElementById('qualificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validar objetivos
+            const objetivosSelecionados = document.querySelectorAll('.objetivo-checkbox:checked');
+            if (objetivosSelecionados.length === 0) {
+                alert('Por favor, selecione pelo menos um objetivo.');
+                return;
+            }
+
+            // Validar plataformas
+            const plataformasSelecionadas = document.querySelectorAll('input[name="plataformas"]:checked');
+            if (plataformasSelecionadas.length === 0) {
+                alert('Por favor, selecione pelo menos uma plataforma.');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const dados = {
+                'Data/Hora': new Date().toLocaleString('pt-BR')
+            };
+            
+            for (let [key, value] of formData.entries()) {
+                if (key === 'plataformas' || key === 'objetivo') {
+                    const traducao = key === 'plataformas' ? 'Plataformas de Interesse' : 'Objetivos';
+                    if (!dados[traducao]) {
+                        dados[traducao] = [];
+                    }
+                    dados[traducao].push(value);
+                } else {
+                    const traducoes = {
+                        'nome': 'Nome Completo',
+                        'email': 'E-mail',
+                        'telefone': 'Telefone/WhatsApp',
+                        'empresa': 'Nome da Empresa',
+                        'area_atuacao': 'Área de Atuação',
+                        'segmento': 'Segmento de Atuação',
+                        'instagram_ativo': 'Instagram Ativo',
+                        'site_possui': 'Possui Site/Landing Page',
+                        'website': 'Website/Link',
+                        'whatsapp_business': 'WhatsApp Business',
+                        'experiencia': 'Experiência com Tráfego Pago',
+                        'orcamento': 'Orçamento Mensal (R$)',
+                        'prazo': 'Prazo para Início',
+                        'detalhes': 'Informações Adicionais'
+                    };
+                    dados[traducoes[key] || key] = value;
+                }
+            }
+            
+            // Converter arrays em strings
+            if (dados['Plataformas de Interesse']) {
+                dados['Plataformas de Interesse'] = dados['Plataformas de Interesse'].join(', ');
+            }
+            if (dados['Objetivos']) {
+                dados['Objetivos'] = dados['Objetivos'].join(', ');
+            }
+            
+            const ws = XLSX.utils.json_to_sheet([dados]);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Qualificação");
+            
+            const nomeCliente = dados['Nome Completo'].replace(/\s+/g, '_');
+            const dataAtual = new Date().toISOString().split('T')[0];
+            const nomeArquivo = `HIR_Qualificacao_${nomeCliente}_${dataAtual}.xlsx`;
+            
+            XLSX.writeFile(wb, nomeArquivo);
+            
+            document.getElementById('successMessage').style.display = 'block';
+            this.reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
