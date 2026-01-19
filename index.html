@@ -5,46 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferramentas - HIR</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
-            background: #f6f8fa;
-            color: #24292f;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
             margin: 0;
-            padding: 50px 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        header {
-            margin-bottom: 48px;
+        .header-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        h1 {
-            font-size: 2.5rem;
+        header h1 {
+            font-size: 2rem;
             font-weight: 700;
-            margin: 0 0 8px 0;
-            color: #1f2328;
+            color: white;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            color: #656d76;
-            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            margin-top: 4px;
         }
 
         .theme-toggle {
-            position: fixed;
-            top: 24px;
-            right: 24px;
             display: flex;
             gap: 8px;
-            background: white;
-            border: 1px solid #d0d7de;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             padding: 4px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         .theme-btn {
@@ -52,34 +62,37 @@
             background: transparent;
             border: none;
             border-radius: 8px;
+            color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 500;
             transition: all 0.2s;
-            color: #656d76;
         }
 
         .theme-btn.active {
-            background: #f6f8fa;
-            color: #1f2328;
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
         }
 
         .card {
-            background: white;
-            border: 1px solid #d0d7de;
-            border-radius: 12px;
-            padding: 28px;
-            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 24px;
             text-decoration: none;
             color: inherit;
             display: block;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .card::before {
@@ -88,20 +101,9 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 4px;
+            transition: opacity 0.3s;
             opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-            border-color: #667eea;
-        }
-
-        .card:hover::before {
-            opacity: 1;
         }
 
         .card:nth-child(1)::before {
@@ -117,163 +119,7 @@
         }
 
         .card:nth-child(4)::before {
-            background: linear-gradient(90deg, #feca57, #ff9ff3);
+            background: linear-gradient(90deg, #ee5a6f, #f29263);
         }
 
-        .card-header {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
-            align-items: flex-start;
-        }
-
-        .icon {
-            font-size: 2.5rem;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f6f8fa;
-            border-radius: 12px;
-            flex-shrink: 0;
-        }
-
-        .card-title {
-            flex: 1;
-        }
-
-        .card h2 {
-            font-size: 1.25rem;
-            margin: 0 0 6px 0;
-            font-weight: 600;
-            color: #1f2328;
-        }
-
-        .card-label {
-            color: #656d76;
-            font-size: 0.875rem;
-        }
-
-        .card p {
-            color: #57606a;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin: 0 0 20px 0;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: #ddf4ff;
-            color: #0969da;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .btn {
-            color: #0969da;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            color: #656d76;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 30px 16px;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .theme-toggle {
-                top: 16px;
-                right: 16px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="theme-toggle">
-        <button class="theme-btn active">☀️ Claro</button>
-        <button class="theme-btn">🌙 Escuro</button>
-    </div>
-
-    <div class="container">
-        <header>
-            <h1>Ferramentas - HIR</h1>
-            <p class="subtitle">Atalhos rápidos para os utilitários que você realmente usa.</p>
-        </header>
-
-        <div class="grid">
-            <a href="Formulário Tráfego Digital - HIR.html" class="card">
-                <div class="card-header">
-                    <div class="icon">📋</div>
-                    <div class="card-title">
-                        <h2>Formulário Tráfego Digital</h2>
-                        <span class="card-label">Validação rápida</span>
-                    </div>
-                </div>
-                <p>Validação e análise completa de formulários para campanhas de tráfego digital com verificação de campos e estrutura.</p>
-                <div class="card-footer">
-                    <div class="tags">
-                        <span class="tag">Validação</span>
-                        <span class="tag">Formulários</span>
-                    </div>
-                    <span class="btn">Abrir →</span>
-                </div>
-            </a>
-
-            <a href="Visualizador de Safe Zone - HIR.HTML" class="card">
-                <div class="card-header">
-                    <div class="icon">🎯</div>
-                    <div class="card-title">
-                        <h2>Visualizador de Safe Zone</h2>
-                        <span class="card-label">Dimensões de criativos</span>
-                    </div>
-                </div>
-                <p>Confira rapidamente se os formatos enviados batem com as dimensões suportadas antes de subir no servidor.</p>
-                <div class="card-footer">
-                    <div class="tags">
-                        <span class="tag">Display</span>
-                        <span class="tag">QA</span>
-                    </div>
-                    <span class="btn">Ver tela →</span>
-                </div>
-            </a>
-        </div>
-
-        <footer>
-            <p>Desenvolvido pela equipe HIR • Tráfego Digital © 2026</p>
-        </footer>
-    </div>
-</body>
-</html>
+        
