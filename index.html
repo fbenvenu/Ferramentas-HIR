@@ -3,14 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ferramentas - HIR</title>
+    <title>Ferramentas de Tráfego Digital - HIR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: fadeInUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .tool-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tool-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.8;
+            animation: fadeIn 1.2s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Ferramentas - Tráfego Digital HIR</h1>
-    <p>Atalhos para as ferramentas utilizadas:</p>
-    <ul>
-        <li><a href="Formulário Tráfego Digital - HIR.html">Formulário Tráfego Digital</a></li>
-        <li><a href="Visualizador de Safe Zone - HIR.HTML">Visualizador de Safe Zone</a></li>
-    </ul>
+    <div class="container">
+        <header>
+            <h1>🚀 Ferramentas de Tráfego Digital</h1>
+            <p>Atalhos rápidos para os utilitários que você realmente usa</p>
+        </header>
+
+        <div class="tools-grid">
+            <div class="tool-card" onclick="window.location.href='Formulário Tráfego Digital - HIR.html'">
+                <div class="tool-icon">📋</div>
+                <h2>Formulário Tráfego Digital</h2>
+                <p>Validação e análise completa de formulários para campanhas de tráfego digital.</p>
+                <a href="Formulário Tráfego Digital - HIR.html" class="tool-btn">Acessar Ferramenta</a>
+                <div class="tags">
+                    <span class="tag">Validação</span>
+                    <span class="tag">Formulários</span>
+                </div>
+            </div>
+
+            <div class="tool-card" onclick="window.location.href='Visualizador de Safe Zone - HIR.HTML'">
+                <div class="tool-icon">🎯</div>
+                <h2>Visualizador de Safe Zone</h2>
+                <p>Confira rapidamente se os formatos de criativos estão dentro das dimensões corretas.</p>
+                <a href="Visualizador de Safe Zone - HIR.HTML" class="tool-btn">Acessar Ferramenta</a>
+                <div class="tags">
+                    <span class="tag">Display</span>
+                    <span class="tag">Criativos</span>
+                </div>
+            </div>
+
+            <!-- Adicione mais cards aqui se quiser -->
+        </div>
+
+        <footer>
+            <p>Desenvolvido com 💜 pela equipe HIR | Tráfego Digital © 2026</p>
+        </footer>
+    </div>
 </body>
 </html>
