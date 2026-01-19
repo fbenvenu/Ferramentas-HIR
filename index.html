@@ -14,56 +14,59 @@
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            min-height: 100vh;
-            padding: 50px 24px;
-            transition: background 0.3s;
-        }
-
-        body.dark {
             background: #0a0e27;
             color: #fff;
+            min-height: 100vh;
+            padding: 50px 24px;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        body.light {
-            background: #f1f5f9;
-            color: #0f172a;
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(118, 75, 162, 0.12) 0%, transparent 50%);
+            animation: gradient-shift 20s ease infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-10%, 10%) rotate(180deg); }
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         header {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 56px;
         }
 
         header h1 {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: -0.5px;
         }
 
-        body.dark header h1 {
-            color: #fff;
-        }
-
-        body.light header h1 {
-            color: #0f172a;
-        }
-
         .subtitle {
-            font-size: 1rem;
-        }
-
-        body.dark .subtitle {
             color: #94a3b8;
-        }
-
-        body.light .subtitle {
-            color: #64748b;
+            font-size: 1rem;
         }
 
         .theme-toggle {
@@ -72,27 +75,19 @@
             right: 28px;
             display: flex;
             gap: 6px;
+            background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
             border-radius: 12px;
             padding: 6px;
             z-index: 100;
-        }
-
-        body.dark .theme-toggle {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        body.light .theme-toggle {
-            background: white;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
         .theme-btn {
             padding: 8px 16px;
             background: transparent;
             border: none;
+            color: #94a3b8;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.85rem;
@@ -100,33 +95,22 @@
             transition: all 0.3s;
         }
 
-        body.dark .theme-btn {
-            color: #94a3b8;
-        }
-
-        body.light .theme-btn {
-            color: #64748b;
-        }
-
-        body.dark .theme-btn.active {
+        .theme-btn.active {
             background: rgba(99, 102, 241, 0.2);
             color: #c7d2fe;
         }
 
-        body.light .theme-btn.active {
-            background: #e0e7ff;
-            color: #4338ca;
-        }
-
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
         .tool-card {
             border-radius: 20px;
-            padding: 32px 28px;
+            padding: 32px;
             text-decoration: none;
             color: white;
             display: flex;
@@ -134,81 +118,106 @@
             position: relative;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            min-height: 280px;
+            min-height: 300px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tool-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+            pointer-events: none;
         }
 
         .tool-card:nth-child(1) {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #5b7cde 0%, #7b68d1 100%);
         }
 
         .tool-card:nth-child(2) {
-            background: linear-gradient(135deg, #0abde3 0%, #48dbfb 100%);
+            background: linear-gradient(135deg, #1cb5cc 0%, #45c9d6 100%);
         }
 
         .tool-card:nth-child(3) {
-            background: linear-gradient(135deg, #d946ef 0%, #f0abfc 100%);
+            background: linear-gradient(135deg, #c946d6 0%, #d96bc3 100%);
         }
 
         .tool-card:nth-child(4) {
-            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+            background: linear-gradient(135deg, #e8903c 0%, #f0a45d 100%);
         }
 
         .tool-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .card-header {
+        .card-top {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 20px;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
         }
 
         .icon-box {
-            width: 48px;
-            height: 48px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             flex-shrink: 0;
         }
 
-        .card-titles h3 {
-            font-size: 1.25rem;
+        .card-title-wrapper h2 {
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 2px;
-            letter-spacing: -0.2px;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .card-subtitle {
             font-size: 0.85rem;
-            opacity: 0.9;
+            opacity: 0.85;
         }
 
         .card-body {
             flex: 1;
+            position: relative;
+            z-index: 1;
         }
 
         .card-description {
             font-size: 0.95rem;
-            line-height: 1.6;
-            opacity: 0.95;
-            margin-bottom: 24px;
+            line-height: 1.65;
+            opacity: 0.92;
+            margin-bottom: 28px;
         }
 
-        .card-actions {
+        .card-footer {
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
-        .action-link {
-            padding: 10px 18px;
-            background: rgba(255, 255, 255, 0.2);
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             font-size: 0.85rem;
             font-weight: 500;
@@ -220,49 +229,42 @@
             gap: 6px;
         }
 
-        .action-link:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .btn-action:hover {
+            background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
         }
 
-        .tech-badges {
+        .tech-tags {
             display: flex;
             gap: 8px;
-            margin-top: 20px;
             flex-wrap: wrap;
         }
 
-        .tech-badge {
-            padding: 5px 12px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 6px;
+        .tech-tag {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
             font-size: 0.7rem;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
         }
 
-        .tech-badge::before {
-            content: '•';
-            font-size: 1rem;
+        .tech-tag::before {
+            content: '●';
+            font-size: 0.6rem;
         }
 
         footer {
             text-align: center;
             margin-top: 60px;
             padding-top: 28px;
-            font-size: 0.875rem;
-        }
-
-        body.dark footer {
             border-top: 1px solid rgba(148, 163, 184, 0.1);
             color: #64748b;
-        }
-
-        body.light footer {
-            border-top: 1px solid #e2e8f0;
-            color: #64748b;
+            font-size: 0.875rem;
+            position: relative;
+            z-index: 1;
         }
 
         @media (max-width: 768px) {
@@ -277,13 +279,18 @@
             .tools-grid {
                 grid-template-columns: 1fr;
             }
+
+            .theme-toggle {
+                top: 20px;
+                right: 20px;
+            }
         }
     </style>
 </head>
-<body class="dark">
+<body>
     <div class="theme-toggle">
-        <button class="theme-btn active" onclick="setTheme('dark')">🌙 Escuro</button>
-        <button class="theme-btn" onclick="setTheme('light')">☀️ Claro</button>
+        <button class="theme-btn active">🌙 Escuro</button>
+        <button class="theme-btn">☀️ Claro</button>
     </div>
 
     <div class="container">
@@ -294,68 +301,54 @@
 
         <div class="tools-grid">
             <a href="Formulário Tráfego Digital - HIR.html" class="tool-card">
-                <div class="card-header">
+                <div class="card-top">
                     <div class="icon-box">📋</div>
-                    <div class="card-titles">
-                        <h3>FORMULÁRIO</h3>
-                        <p class="card-subtitle">Validação rápida</p>
+                    <div class="card-title-wrapper">
+                        <h2>VISUALIZADOR</h2>
+                        <p class="card-subtitle">Dimensões de criativos</p>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="card-description">Validação e análise completa de formulários para campanhas de tráfego digital com verificação de campos e estrutura.</p>
-                    <div class="card-actions">
-                        <span class="action-link">Validar →</span>
+                    <p class="card-description">Confere rapidamente se os formatos enviados batem com as dimensões suportadas antes de subir no ad server.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="action-buttons">
+                        <a href="Formulário Tráfego Digital - HIR.html" class="btn-action">Ver tela →</a>
                     </div>
-                    <div class="tech-badges">
-                        <span class="tech-badge">Validação</span>
-                        <span class="tech-badge">Formulários</span>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Display</span>
+                        <span class="tech-tag">QA</span>
                     </div>
                 </div>
             </a>
 
             <a href="Visualizador de Safe Zone - HIR.HTML" class="tool-card">
-                <div class="card-header">
+                <div class="card-top">
                     <div class="icon-box">🎯</div>
-                    <div class="card-titles">
-                        <h3>VISUALIZADOR</h3>
-                        <p class="card-subtitle">Dimensões de criativos</p>
+                    <div class="card-title-wrapper">
+                        <h2>TOUCHPOINT</h2>
+                        <p class="card-subtitle">IDs + Parâmetros</p>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="card-description">Confira rapidamente se os formatos enviados batem com as dimensões suportadas antes de subir no ad server.</p>
-                    <div class="card-actions">
-                        <span class="action-link">Ver tela →</span>
+                    <p class="card-description">Garante que IDs, posicionamentos e parâmetros estejam corretos antes do disparo em GAM.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="action-buttons">
+                        <a href="Visualizador de Safe Zone - HIR.HTML" class="btn-action">Validar →</a>
                     </div>
-                    <div class="tech-badges">
-                        <span class="tech-badge">Display</span>
-                        <span class="tech-badge">QA</span>
+                    <div class="tech-tags">
+                        <span class="tech-tag">GAM</span>
+                        <span class="tech-tag">Validação</span>
                     </div>
                 </div>
             </a>
+
         </div>
 
         <footer>
             <p>Desenvolvido pela equipe HIR • Tráfego Digital © 2026</p>
         </footer>
     </div>
-
-    <script>
-        function setTheme(theme) {
-            document.body.className = theme;
-            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            localStorage.setItem('theme', theme);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.body.className = savedTheme;
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                if (btn.textContent.includes(savedTheme === 'dark' ? 'Escuro' : 'Claro')) {
-                    btn.classList.add('active');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
