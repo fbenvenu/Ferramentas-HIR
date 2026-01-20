@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Links - HIR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --card-shadow: rgba(15, 23, 42, 0.08);
+            --card-hover-shadow: rgba(15, 23, 42, 0.15);
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --card-shadow: rgba(0, 0, 0, 0.3);
+            --card-hover-shadow: rgba(0, 0, 0, 0.5);
+            --accent-color: #60a5fa;
+            --accent-hover: #3b82f6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 40px 20px;
+            transition: color 0.3s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Fundo animado com gradiente azul profissional */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1a365d);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        [data-theme="dark"] .animated-background {
+            background: linear-gradient(-45deg, #020617, #0c1929, #1e293b, #0f172a);
+            background-size: 400% 400%;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Efeito de brilhos/partículas */
+        .animated-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(96, 165, 250, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(147, 197, 253, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 60% 70%, rgba(37, 99, 235, 0.2) 0%, transparent 50%);
+            animation: shimmer 20s ease infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .header h1 {
+            color: #ffffff;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header p {
+            color: var(--text-secondary);
+        }
+
+        [data-theme="light"] .header p {
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 12px var(--card-shadow);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px var(--card-hover-shadow);
+        }
+
+        .theme-toggle-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .link-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px 20px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px var(--card-shadow);
+            min-height: 180px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .link-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px var(--card-hover-shadow);
+            border-color: var(--accent-color);
+        }
+
+        .link-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .link-card:active {
+            transform: translateY(-3px);
+        }
+
+        .link-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .link-title {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .link-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        [data-theme="light"] .footer {
+            color: rgba(255, 255, 255, 0.8);
+            border-top-color: rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .links-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 16px;
+            }
+
+            .theme-toggle {
+                top: 20px;
+                right: 20px;
+                padding: 10px 16px;
+            }
+
+            .theme-toggle-text {
+                display: none;
+            }
+
+            .link-card {
+                min-height: 160px;
+                padding: 24px 16px;
+            }
+
+            .link-icon {
+                font-size: 40px;
+            }
+
+            .link-title {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-background"></div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema">
+        <span id="theme-icon">🌙</span>
+        <span class="theme-toggle-text" id="theme-text">Escuro</span>
+    </button>
+
+    <div class="container">
+        <div class="header">
+            <h1>Central de Links - HIR</h1>
+            <p>Acesso rápido aos principais recursos e ferramentas</p>
+        </div>
+
+        <div class="links-grid">
+            <a href="https://drive.google.com/drive/folders/1eno6lTC8LkU1M80Tax-ILp2ofHfVG1Y6" target="_blank" class="link-card">
+                <span class="link-icon">📁</span>
+                <div class="link-title">Marketing HIR</div>
+                <div class="link-subtitle">Google Drive</div>
+            </a>
+
+            <a href="https://docs.google.com/spreadsheets/d/18pAnhISJVrudQu0-7rbFvmtz2qtYEoCe/edit?gid=1766419226#gid=1766419226" target="_blank" class="link-card">
+                <span class="link-icon">📊</span>
+                <div class="link-title">Planejamento de Conteúdo - ODARA</div>
+                <div class="link-subtitle">Google Sheets</div>
+            </a>
+
+            <a href="https://docs.google.com/spreadsheets/d/1Uca1hBZCqYmMcJzLzJ7UvDk6OoFEiXphN8HaCRiimYA/edit?gid=776758700#gid=776758700" target="_blank" class="link-card">
+                <span class="link-icon">📊</span>
+                <div class="link-title">Planejamento de Conteúdo - Dr. Renato Andrade</div>
+                <div class="link-subtitle">Google Sheets</div>
+            </a>
+
+            <a href="https://drive.google.com/drive/u/2/folders/1TrsgtFlNOkSDaip8U4Xzp6QlFCkSvhYo" target="_blank" class="link-card">
+                <span class="link-icon">📝</span>
+                <div class="link-title">Roteiros da Semana</div>
+                <div class="link-subtitle">Google Drive</div>
+            </a>
+
+            <a href="https://trello.com/b/gfFBolw9/instituto-odara" target="_blank" class="link-card">
+                <span class="link-icon">📋</span>
+                <div class="link-title">Trello HIR</div>
+                <div class="link-subtitle">Gerenciamento de Projetos</div>
+            </a>
+
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiODQ5YjA3MTAtYzYxOC00NTJhLWJhNTQtODRjMDhkYTNmMTU3IiwidCI6ImE3Y2RjNDQ3LTNiMjktNGI0MS1iNzNlLThhMmNiNTRiMDZjNiIsImMiOjR9" target="_blank" class="link-card">
+                <span class="link-icon">📈</span>
+                <div class="link-title">Dash Mídias Programáticas - Dr. Renato Andrade</div>
+                <div class="link-subtitle">Power BI Dashboard</div>
+            </a>
+
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiMGFiOTMzYmMtYWRkZS00NTBjLWI5YWQtY2ExYTU3OWIwNGIzIiwidCI6ImE3Y2RjNDQ3LTNiMjktNGI0MS1iNzNlLThhMmNiNTRiMDZjNiIsImMiOjR9" target="_blank" class="link-card">
+                <span class="link-icon">📈</span>
+                <div class="link-title">Dash Leads - Dr. Renato Andrade</div>
+                <div class="link-subtitle">Power BI Dashboard</div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>Central de Links HIR • Última atualização: Janeiro 2026</p>
+        </div>
+    </div>
+
+    <script>
+        // Verifica preferência salva ou preferência do sistema
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            updateThemeButton('dark');
+        } else {
+            updateThemeButton('light');
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeButton(newTheme);
+        }
+
+        function updateThemeButton(theme) {
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+
+            if (theme === 'dark') {
+                icon.textContent = '☀️';
+                text.textContent = 'Claro';
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Escuro';
+            }
+        }
+    </script>
+</body>
+</html>
