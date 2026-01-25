@@ -233,6 +233,12 @@
             font-weight: 500;
         }
 
+        body.light-theme .tag {
+            background: rgba(0, 217, 255, 0.1);
+            border-color: rgba(0, 184, 212, 0.3);
+            color: #00b8d4;
+        }
+
         /* Status Badge */
         .status {
             position: absolute;
@@ -272,6 +278,15 @@
             background: var(--accent-hover);
             transform: scale(1.05);
             box-shadow: 0 8px 20px rgba(0, 217, 255, 0.3);
+        }
+
+        body.light-theme .btn {
+            background: var(--accent);
+            color: white;
+        }
+
+        body.light-theme .btn:hover {
+            background: var(--accent-hover);
         }
 
         /* Footer */
