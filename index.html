@@ -155,7 +155,7 @@
             }
         }
 
-        /* Card */
+        /* Card - Agora é um link */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -164,6 +164,10 @@
             position: relative;
             transition: all 0.3s ease;
             overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            cursor: pointer;
         }
 
         .card::before {
@@ -257,41 +261,6 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        /* Button - ESTILO ORIGINAL */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: rgba(99, 102, 241, 0.15);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            color: #818cf8;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-top: 15px;
-            font-size: 1rem;
-        }
-
-        .card:hover .btn {
-            transform: translateX(4px);
-            background: rgba(99, 102, 241, 0.25);
-            color: #c7d2fe;
-        }
-
-        body.light-theme .btn {
-            background: #f1f5f9;
-            color: #475569;
-            border: none;
-        }
-
-        body.light-theme .card:hover .btn {
-            background: #6366f1;
-            color: white;
-        }
-
         /* Footer */
         footer {
             text-align: center;
@@ -320,7 +289,7 @@
 
         <div class="cards-grid">
             <!-- Card 1: Formulário Tráfego -->
-            <div class="card">
+            <a href="Formulário Tráfego Digital - HIR.html" class="card">
                 <span class="status active">ATIVO</span>
                 <div class="card-icon">📋</div>
                 <h3>Formulário Tráfego Digital</h3>
@@ -330,11 +299,10 @@
                     <span class="tag">Validação</span>
                     <span class="tag">Formulários</span>
                 </div>
-                <a href="Formulário Tráfego Digital - HIR.html" class="btn">→</a>
-            </div>
+            </a>
 
             <!-- Card 2: Safe Zone -->
-            <div class="card">
+            <a href="Visualizador de Safe Zone - HIR.HTML" class="card">
                 <span class="status active">ATIVO</span>
                 <div class="card-icon">🎯</div>
                 <h3>Visualizador de Safe Zone</h3>
@@ -344,11 +312,10 @@
                     <span class="tag">Display</span>
                     <span class="tag">QA</span>
                 </div>
-                <a href="Visualizador de Safe Zone - HIR.HTML" class="btn">→</a>
-            </div>
+            </a>
 
             <!-- Card 3: Central de Links -->
-            <div class="card">
+            <a href="Central de Links - HIR.html" class="card">
                 <span class="status active">ATIVO</span>
                 <div class="card-icon">🔗</div>
                 <h3>Central de Links</h3>
@@ -358,11 +325,10 @@
                     <span class="tag">Links</span>
                     <span class="tag">Recursos</span>
                 </div>
-                <a href="Central de Links - HIR.html" class="btn">→</a>
-            </div>
+            </a>
 
             <!-- Card 4: Analisador de Leads -->
-            <div class="card">
+            <a href="Visualizador de Leads CRM.html" class="card">
                 <span class="status active">ATIVO</span>
                 <div class="card-icon">📊</div>
                 <h3>Analisador de Leads CRM</h3>
@@ -372,8 +338,7 @@
                     <span class="tag">Dashboard</span>
                     <span class="tag">Analytics</span>
                 </div>
-                <a href="Visualizador de Leads CRM.html" class="btn">→</a>
-            </div>
+            </a>
         </div>
 
         <footer>
