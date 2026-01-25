@@ -119,10 +119,11 @@
             font-size: 3.5em;
             font-weight: 700;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--accent) 0%, #00b8d4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: white;
+        }
+
+        body.light-theme h1 {
+            color: #102a43;
         }
 
         .subtitle {
@@ -133,7 +134,7 @@
         /* Cards Grid */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+            grid-template-columns: repeat(4, 1fr);
             gap: 25px;
             margin-bottom: 40px;
         }
@@ -196,7 +197,11 @@
         .card h3 {
             font-size: 1.4em;
             margin-bottom: 10px;
-            color: var(--text);
+            color: white;
+        }
+
+        body.light-theme .card h3 {
+            color: #102a43;
         }
 
         .card p {
