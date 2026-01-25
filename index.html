@@ -257,36 +257,39 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        /* Button */
+        /* Button - ESTILO ORIGINAL */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: var(--accent);
-            color: var(--bg-dark);
+            width: 32px;
+            height: 32px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #818cf8;
             text-decoration: none;
             border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s ease;
             margin-top: 15px;
-            font-size: 1.1em;
+            font-size: 1rem;
         }
 
-        .btn:hover {
-            background: var(--accent-hover);
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 217, 255, 0.3);
+        .card:hover .btn {
+            transform: translateX(4px);
+            background: rgba(99, 102, 241, 0.25);
+            color: #c7d2fe;
         }
 
         body.light-theme .btn {
-            background: var(--accent);
-            color: white;
+            background: #f1f5f9;
+            color: #475569;
+            border: none;
         }
 
-        body.light-theme .btn:hover {
-            background: var(--accent-hover);
+        body.light-theme .card:hover .btn {
+            background: #6366f1;
+            color: white;
         }
 
         /* Footer */
