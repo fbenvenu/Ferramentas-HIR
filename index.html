@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workspace - HIR</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,424 +12,281 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-card: #1a1f3a;
+            --accent: #00d9ff;
+            --accent-hover: #00b8d4;
+            --text: #e0e6ed;
+            --text-muted: #8b92a8;
+            --border: #2a2f4a;
+        }
+
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: var(--text);
             min-height: 100vh;
-            padding: 50px 24px;
             position: relative;
             overflow-x: hidden;
-            transition: background 0.3s, color 0.3s;
         }
 
-        body.dark {
-            background: #0a0e27;
-            color: #fff;
-        }
-
-        body.light {
-            background: #f8fafc;
-            color: #1e293b;
-        }
-
-        body.dark::before {
+        body::before {
             content: '';
             position: fixed;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
-            animation: gradient-shift 20s ease infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 184, 212, 0.03) 0%, transparent 50%);
+            pointer-events: none;
             z-index: 0;
-        }
-
-        @keyframes gradient-shift {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-10%, 10%) rotate(180deg); }
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 40px 20px;
             position: relative;
             z-index: 1;
         }
 
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .theme-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Light Theme */
+        body.light-theme {
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            color: #102a43;
+        }
+
+        body.light-theme::before {
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 184, 212, 0.05) 0%, transparent 50%);
+        }
+
+        body.light-theme {
+            --bg-dark: #ffffff;
+            --bg-card: #ffffff;
+            --text: #102a43;
+            --text-muted: #486581;
+            --border: #d9e2ec;
+        }
+
+        /* Header */
         header {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 60px;
         }
 
-        header h1 {
-            font-size: 2.5rem;
+        h1 {
+            font-size: 3.5em;
             font-weight: 700;
             margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-
-        body.dark header h1 {
-            background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, #00b8d4 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        body.light header h1 {
-            color: #0f172a;
-        }
-
         .subtitle {
-            font-size: 1rem;
-            font-weight: 400;
+            font-size: 1.1em;
+            color: var(--text-muted);
         }
 
-        body.dark .subtitle {
-            color: #94a3b8;
-        }
-
-        body.light .subtitle {
-            color: #64748b;
-        }
-
-        .theme-toggle {
-            position: fixed;
-            top: 28px;
-            right: 28px;
-            display: flex;
-            gap: 6px;
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 6px;
-            z-index: 100;
-            transition: all 0.3s;
-        }
-
-        body.dark .theme-toggle {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        body.light .theme-toggle {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(203, 213, 225, 0.5);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .theme-btn {
-            padding: 8px 16px;
-            background: transparent;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        body.dark .theme-btn {
-            color: #94a3b8;
-        }
-
-        body.light .theme-btn {
-            color: #64748b;
-        }
-
-        body.dark .theme-btn.active {
-            background: rgba(99, 102, 241, 0.2);
-            color: #c7d2fe;
-        }
-
-        body.light .theme-btn.active {
-            background: #e0e7ff;
-            color: #4338ca;
-        }
-
-        .tools-grid {
+        /* Cards Grid */
+        .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1100px;
-            margin: 0 auto;
+            grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
-        .tool-card {
-            backdrop-filter: blur(20px);
+        @media (max-width: 1200px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+            }
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 22px;
-            text-decoration: none;
-            color: inherit;
-            display: block;
+            padding: 30px;
             position: relative;
+            transition: all 0.3s ease;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        body.dark .tool-card {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(148, 163, 184, 0.12);
-        }
-
-        body.light .tool-card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-        }
-
-        .tool-card::before {
+        .card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 2px;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #00b8d4);
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s ease;
         }
 
-        .tool-card:nth-child(1)::before {
-            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 217, 255, 0.15);
+            border-color: var(--accent);
         }
 
-        .tool-card:nth-child(2)::before {
-            background: linear-gradient(90deg, #06b6d4, #3b82f6);
-        }
-
-        .tool-card:nth-child(3)::before {
-            background: linear-gradient(90deg, #10b981, #14b8a6);
-        }
-
-        .tool-card:hover {
-            transform: translateY(-6px);
-        }
-
-        body.dark .tool-card:hover {
-            border-color: rgba(148, 163, 184, 0.25);
-            background: rgba(15, 23, 42, 0.8);
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        body.light .tool-card:hover {
-            border-color: #cbd5e1;
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
-        }
-
-        .tool-card:hover::before {
+        .card:hover::before {
             opacity: 1;
         }
 
-        .card-top {
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .card .description {
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+
+        /* Tags */
+        .tags {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 15px 0;
         }
 
-        .icon-container {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .tool-card:nth-child(1) .icon-container {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
-        }
-
-        .tool-card:nth-child(2) .icon-container {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.15));
-        }
-
-        .tool-card:nth-child(3) .icon-container {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(20, 184, 166, 0.15));
-        }
-
-        body.dark .icon-container {
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
-        }
-
-        .status {
+        .tag {
             padding: 5px 12px;
-            border-radius: 8px;
-            font-size: 0.7rem;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.75em;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Status Badge */
+        .status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.7em;
             font-weight: 600;
-            text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        body.dark .status {
+        .status.active {
             background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
             border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #6ee7b7;
         }
 
-        body.light .status {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .card-body h2 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-            letter-spacing: -0.3px;
-        }
-
-        body.dark .card-body h2 {
-            color: #f1f5f9;
-        }
-
-        body.light .card-body h2 {
-            color: #0f172a;
-        }
-
-        .card-label {
-            display: block;
-            font-size: 0.8rem;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-
-        body.dark .card-label {
-            color: #94a3b8;
-        }
-
-        body.light .card-label {
-            color: #64748b;
-        }
-
-        .card-description {
-            font-size: 0.875rem;
-            line-height: 1.5;
-            margin-bottom: 18px;
-        }
-
-        body.dark .card-description {
-            color: #cbd5e1;
-        }
-
-        body.light .card-description {
-            color: #475569;
-        }
-
-        .card-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 14px;
-        }
-
-        body.dark .card-bottom {
-            border-top: 1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        body.light .card-bottom {
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .tech-tags {
-            display: flex;
-            gap: 6px;
-        }
-
-        .tech-tag {
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 500;
-        }
-
-        body.dark .tech-tag {
-            background: rgba(148, 163, 184, 0.08);
-            border: 1px solid rgba(148, 163, 184, 0.12);
-            color: #94a3b8;
-        }
-
-        body.light .tech-tag {
-            background: #f1f5f9;
-            color: #475569;
-        }
-
-        .action-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
+        /* Button */
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-            transition: all 0.3s;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: var(--bg-dark);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            font-size: 1.1em;
         }
 
-        body.dark .action-btn {
-            background: rgba(99, 102, 241, 0.15);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            color: #818cf8;
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 217, 255, 0.3);
         }
 
-        body.light .action-btn {
-            background: #f1f5f9;
-            color: #475569;
-        }
-
-        .tool-card:hover .action-btn {
-            transform: translateX(4px);
-        }
-
-        body.dark .tool-card:hover .action-btn {
-            background: rgba(99, 102, 241, 0.25);
-            color: #c7d2fe;
-        }
-
-        body.light .tool-card:hover .action-btn {
-            background: #6366f1;
-            color: white;
-        }
-
+        /* Footer */
         footer {
             text-align: center;
             margin-top: 60px;
-            padding-top: 28px;
-            font-size: 0.875rem;
-        }
-
-        body.dark footer {
-            border-top: 1px solid rgba(148, 163, 184, 0.1);
-            color: #64748b;
-        }
-
-        body.light footer {
-            border-top: 1px solid #e2e8f0;
-            color: #64748b;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 36px 18px;
-            }
-
-            header h1 {
-                font-size: 2rem;
-            }
-
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .theme-toggle {
-                top: 20px;
-                right: 20px;
-            }
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 0.9em;
         }
     </style>
 </head>
-<body class="dark">
+<body>
     <div class="theme-toggle">
-        <button class="theme-btn" onclick="setTheme('dark')">🌙 Escuro</button>
-        <button class="theme-btn" onclick="setTheme('light')">☀️ Claro</button>
+        <button class="theme-btn active" id="darkBtn" onclick="setTheme('dark')" title="Modo Escuro">
+            🌙
+        </button>
+        <button class="theme-btn" id="lightBtn" onclick="setTheme('light')" title="Modo Claro">
+            ☀️
+        </button>
     </div>
 
     <div class="container">
@@ -438,63 +295,62 @@
             <p class="subtitle">Atalhos rápidos para os utilitários que você realmente usa.</p>
         </header>
 
-        <div class="tools-grid">
-            <a href="Formulário Tráfego Digital - HIR.html" class="tool-card">
-                <div class="card-top">
-                    <div class="icon-container">📋</div>
-                    <span class="status">Ativo</span>
+        <div class="cards-grid">
+            <!-- Card 1: Formulário Tráfego -->
+            <div class="card">
+                <span class="status active">ATIVO</span>
+                <div class="card-icon">📋</div>
+                <h3>Formulário Tráfego Digital</h3>
+                <p class="description">Validação rápida</p>
+                <p>Validação e análise completa de formulários para campanhas de tráfego digital.</p>
+                <div class="tags">
+                    <span class="tag">Validação</span>
+                    <span class="tag">Formulários</span>
                 </div>
-                <div class="card-body">
-                    <h2>Formulário Tráfego Digital</h2>
-                    <span class="card-label">Validação rápida</span>
-                    <p class="card-description">Validação e análise completa de formulários para campanhas de tráfego digital.</p>
-                </div>
-                <div class="card-bottom">
-                    <div class="tech-tags">
-                        <span class="tech-tag">Validação</span>
-                        <span class="tech-tag">Formulários</span>
-                    </div>
-                    <div class="action-btn">→</div>
-                </div>
-            </a>
+                <a href="Formulário Tráfego Digital - HIR.html" class="btn">→</a>
+            </div>
 
-            <a href="Visualizador de Safe Zone - HIR.HTML" class="tool-card">
-                <div class="card-top">
-                    <div class="icon-container">🎯</div>
-                    <span class="status">Ativo</span>
+            <!-- Card 2: Safe Zone -->
+            <div class="card">
+                <span class="status active">ATIVO</span>
+                <div class="card-icon">🎯</div>
+                <h3>Visualizador de Safe Zone</h3>
+                <p class="description">Dimensões de criativos</p>
+                <p>Confira se os formatos enviados batem com as dimensões suportadas.</p>
+                <div class="tags">
+                    <span class="tag">Display</span>
+                    <span class="tag">QA</span>
                 </div>
-                <div class="card-body">
-                    <h2>Visualizador de Safe Zone</h2>
-                    <span class="card-label">Dimensões de criativos</span>
-                    <p class="card-description">Confira se os formatos enviados batem com as dimensões suportadas.</p>
-                </div>
-                <div class="card-bottom">
-                    <div class="tech-tags">
-                        <span class="tech-tag">Display</span>
-                        <span class="tech-tag">QA</span>
-                    </div>
-                    <div class="action-btn">→</div>
-                </div>
-            </a>
+                <a href="Visualizador de Safe Zone - HIR.HTML" class="btn">→</a>
+            </div>
 
-            <a href="Central de Links - HIR.html" class="tool-card">
-                <div class="card-top">
-                    <div class="icon-container">🔗</div>
-                    <span class="status">Ativo</span>
+            <!-- Card 3: Central de Links -->
+            <div class="card">
+                <span class="status active">ATIVO</span>
+                <div class="card-icon">🔗</div>
+                <h3>Central de Links</h3>
+                <p class="description">Acesso rápido</p>
+                <p>Acesso centralizado aos principais recursos e ferramentas de trabalho.</p>
+                <div class="tags">
+                    <span class="tag">Links</span>
+                    <span class="tag">Recursos</span>
                 </div>
-                <div class="card-body">
-                    <h2>Central de Links</h2>
-                    <span class="card-label">Acesso rápido</span>
-                    <p class="card-description">Acesso centralizado aos principais recursos e ferramentas de trabalho.</p>
+                <a href="Central de Links - HIR.html" class="btn">→</a>
+            </div>
+
+            <!-- Card 4: Analisador de Leads -->
+            <div class="card">
+                <span class="status active">ATIVO</span>
+                <div class="card-icon">📊</div>
+                <h3>Analisador de Leads CRM</h3>
+                <p class="description">Dashboard & Analytics</p>
+                <p>Importe arquivos CSV e visualize métricas completas dos seus leads.</p>
+                <div class="tags">
+                    <span class="tag">Dashboard</span>
+                    <span class="tag">Analytics</span>
                 </div>
-                <div class="card-bottom">
-                    <div class="tech-tags">
-                        <span class="tech-tag">Links</span>
-                        <span class="tech-tag">Recursos</span>
-                    </div>
-                    <div class="action-btn">→</div>
-                </div>
-            </a>
+                <a href="Visualizador de Leads CRM.html" class="btn">→</a>
+            </div>
         </div>
 
         <footer>
@@ -504,24 +360,28 @@
 
     <script>
         function setTheme(theme) {
-            document.body.className = theme;
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            localStorage.setItem('theme', theme);
+            const body = document.body;
+            const darkBtn = document.getElementById('darkBtn');
+            const lightBtn = document.getElementById('lightBtn');
+
+            if (theme === 'light') {
+                body.classList.add('light-theme');
+                lightBtn.classList.add('active');
+                darkBtn.classList.remove('active');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light-theme');
+                darkBtn.classList.add('active');
+                lightBtn.classList.remove('active');
+                localStorage.setItem('theme', 'dark');
+            }
         }
 
-        // Carrega o tema salvo
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.body.className = savedTheme;
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                if (btn.textContent.includes(savedTheme === 'dark' ? 'Escuro' : 'Claro')) {
-                    btn.classList.add('active');
-                }
-            });
-        });
+        // Carregar tema salvo
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            setTheme('light');
+        }
     </script>
 </body>
 </html>
